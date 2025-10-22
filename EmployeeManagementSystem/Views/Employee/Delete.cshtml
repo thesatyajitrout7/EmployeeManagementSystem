@@ -1,0 +1,65 @@
+﻿@model EmployeeManagement.Models.Employee
+
+@{
+    ViewBag.Title = "Delete Employee";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<div class="container mt-4">
+    <h2>Delete Employee</h2>
+
+    <h4>Are you sure you want to delete this employee?</h4>
+
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.Name</dd>
+
+        <dt class="col-sm-2">Age</dt>
+        <dd class="col-sm-10">@Model.Age</dd>
+
+        <dt class="col-sm-2">Position</dt>
+        <dd class="col-sm-10">@Model.Position</dd>
+
+        <dt class="col-sm-2">Salary</dt>
+        <dd class="col-sm-10">@Model.Salary</dd>
+    </dl>
+
+    <form id="deleteForm">
+        <input type="hidden" id="Eid" value="@Model.Eid" />
+        <button type="button" class="btn btn-danger" id="deleteBtn">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+
+    <!-- Feedback Alert -->
+    <div id="feedback" class="mt-3"></div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#deleteBtn').click(function() {
+            if (!confirm('Are you sure you want to delete this employee?')) return;
+
+            var id = $('#Eid').val();
+            $.ajax({
+                url: '/Employee/DeleteConfirmed/' + id,
+                type: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        $('#feedback').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(function() {
+                            window.location.href = '/Employee/Index';
+                        }, 1500);
+                    } else {
+                        $('#feedback').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function() {
+                    $('#feedback').html('<div class="alert alert-danger">Error while deleting employee.</div>');
+                }
+            });
+        });
+    });
+</script>
+

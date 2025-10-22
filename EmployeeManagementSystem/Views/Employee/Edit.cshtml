@@ -1,0 +1,61 @@
+﻿@model EmployeeManagement.Models.Employee
+
+@{
+    ViewBag.Title = "Edit Employee";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<div class="container mt-4">
+    <h2>Edit Employee</h2>
+
+    <form id="editForm">
+        <input type="hidden" id="Eid" value="@Model.Eid" />
+        <div class="mb-3">
+            <label>Name</label>
+            <input type="text" class="form-control" id="Name" value="@Model.Name" required />
+        </div>
+        <div class="mb-3">
+            <label>Age</label>
+            <input type="number" class="form-control" id="Age" value="@Model.Age" required />
+        </div>
+        <div class="mb-3">
+            <label>Position</label>
+            <input type="text" class="form-control" id="Position" value="@Model.Position" required />
+        </div>
+        <div class="mb-3">
+            <label>Salary</label>
+            <input type="number" class="form-control" id="Salary" value="@Model.Salary" required />
+        </div>
+        <button type="button" class="btn btn-primary" id="editBtn">Update</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#editBtn').click(function() {
+            var emp = {
+                Eid: $('#Eid').val(),
+                Name: $('#Name').val(),
+                Age: $('#Age').val(),
+                Position: $('#Position').val(),
+                Salary: $('#Salary').val()
+            };
+
+            $.ajax({
+                url: '/Employee/Edit',
+                type: 'POST',
+                data: emp,
+                success: function() {
+                    alert('Employee updated successfully.');
+                    window.location.href = '/Employee/Index';
+                },
+                error: function() {
+                    alert('Error while updating employee.');
+                }
+            });
+        });
+    });
+</script>
