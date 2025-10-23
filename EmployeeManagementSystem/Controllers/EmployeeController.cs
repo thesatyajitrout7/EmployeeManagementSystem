@@ -16,13 +16,13 @@ namespace EmployeeManagement.Controllers
             _config = config;
         }
 
-        // 🔹 LOGIN CHECK
+        //  LOGIN CHECK
         private bool IsLoggedIn()
         {
             return HttpContext.Session.GetString("Username") != null;
         }
 
-        // 🔹 LIST (READ)
+        //  LIST (READ)
         public IActionResult Index()
         {
             if (!IsLoggedIn())
@@ -51,7 +51,7 @@ namespace EmployeeManagement.Controllers
             return View(list);
         }
 
-        // 🔹 CREATE (GET)
+        //  CREATE (GET)
         public IActionResult Create()
         {
             if (!IsLoggedIn())
@@ -60,7 +60,7 @@ namespace EmployeeManagement.Controllers
             return View();
         }
 
-        // 🔹 CREATE (POST)
+        //  CREATE (POST)
         [HttpPost]
         public IActionResult Create(Employee emp)
         {
@@ -89,7 +89,7 @@ namespace EmployeeManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        // 🔹 EDIT (GET)
+        //  EDIT (GET)
         public IActionResult Edit(int id)
         {
             if (!IsLoggedIn())
@@ -122,7 +122,7 @@ namespace EmployeeManagement.Controllers
             return View(emp);
         }
 
-        // 🔹 EDIT (POST)
+        //  EDIT (POST)
         [HttpPost]
         public IActionResult Edit(Employee emp)
         {
@@ -152,7 +152,7 @@ namespace EmployeeManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        // 🔹 DELETE (GET) - confirm delete
+        //  DELETE (GET) - confirm delete
         public IActionResult Delete(int id)
         {
             if (!IsLoggedIn())
@@ -185,7 +185,7 @@ namespace EmployeeManagement.Controllers
             return View(emp); // Delete.cshtml will handle AJAX
         }
 
-        // 🔹 DELETE (POST) - AJAX
+        //  DELETE (POST) - AJAX
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
