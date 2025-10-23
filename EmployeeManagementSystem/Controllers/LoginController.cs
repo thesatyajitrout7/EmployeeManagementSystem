@@ -14,13 +14,13 @@ namespace EmployeeManagement.Controllers
             _config = config;
         }
 
-        // 🔹 GET: Login page
+        //  GET: Login page
         public IActionResult Index()
         {
             return View();
         }
 
-        // 🔹 POST: Verify login credentials
+        //  POST: Verify login credentials
         [HttpPost]
         public IActionResult Verify(Login model)
         {
@@ -35,13 +35,13 @@ namespace EmployeeManagement.Controllers
                 using var reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    // ✅ Login success → set session
+                    //  Login success → set session
                     HttpContext.Session.SetString("Username", reader["Username"].ToString());
                     return RedirectToAction("Index", "Employee"); // redirect to employee dashboard
                 }
                 else
                 {
-                    // ❌ Login failed
+                    //  Login failed
                     ViewBag.message = "Invalid username or password!";
                     return View("Index");
                 }
@@ -49,7 +49,7 @@ namespace EmployeeManagement.Controllers
             return View("Index");
         }
 
-        // 🔹 Logout
+        //  Logout
         public IActionResult Logout()
         {
             HttpContext.Session.Clear(); // Clear all session data
