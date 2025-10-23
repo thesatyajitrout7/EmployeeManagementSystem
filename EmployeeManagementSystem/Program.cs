@@ -4,10 +4,8 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// ✅ Session support
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -30,12 +28,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ Enable session
 app.UseSession();
 
 app.UseAuthorization();
 
-// ✅ Default route → Login page
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");
